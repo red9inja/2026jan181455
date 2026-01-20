@@ -27,6 +27,6 @@ jobs:
         context: .
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: red9inja/2026jan181455:master
+        tags: redninja009/2026jan181455:master
         cache-from: type=gha
         cache-to: type=gha,mode=max
