@@ -1,149 +1,324 @@
-# 🚀 Docker + GitHub Actions Hello World
+# AWS Demo Application
 
-Simple HTML page deployed using lightweight Docker container with automated CI/CD pipeline.
+A comprehensive full-stack application demonstrating modern AWS services integration with React frontend, Node.js backend, Python Lambda functions, and complete infrastructure automation.
+
+## Architecture
+
+```
+Internet
+    │
+    ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        AWS Cloud                                │
+│                                                                 │
+│  ┌─────────────┐    ┌──────────────┐    ┌─────────────────┐   │
+│  │   Amplify   │    │     ALB      │    │   API Gateway   │   │
+│  │  (Frontend) │    │ (Load Balancer)   │   (Lambda API)  │   │
+│  └─────────────┘    └──────────────┘    └─────────────────┘   │
+│         │                   │                     │           │
+│         ▼                   ▼                     ▼           │
+│  ┌─────────────┐    ┌──────────────┐    ┌─────────────────┐   │
+│  │   Cognito   │    │     ECS      │    │     Lambda      │   │
+│  │    (Auth)   │    │  (Backend)   │    │   (Functions)   │   │
+│  └─────────────┘    └──────────────┘    └─────────────────┘   │
+│         │                   │                     │           │
+│         └───────────────────┼─────────────────────┘           │
+│                             ▼                                 │
+│                    ┌──────────────┐                          │
+│                    │  DynamoDB    │                          │
+│                    │ (Database)   │                          │
+│                    └──────────────┘                          │
+│                             │                                 │
+│                             ▼                                 │
+│                    ┌──────────────┐                          │
+│                    │      S3      │                          │
+│                    │  (Storage)   │                          │
+│                    └──────────────┘                          │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Features
+
+### Frontend (React + Amplify)
+- Authentication: Cognito-powered login/signup with MFA support
+- File Upload: Direct S3 upload with progress tracking
+- Real-time API: Integration with both ECS backend and Lambda functions
+- Responsive Design: Mobile-first approach with modern UI
+- Auto-deployment: GitHub Actions integration with Amplify
+
+### Backend (Node.js + ECS)
+- REST API: Express.js with comprehensive error handling
+- Database Integration: DynamoDB operations with AWS SDK
+- File Management: S3 operations for file storage
+- Health Monitoring: Built-in health checks and metrics
+- Container Orchestration: ECS Fargate with auto-scaling
+
+### Lambda Functions (Python)
+- Serverless Processing: Event-driven data processing
+- Email Notifications: SES integration for user communications
+- API Gateway: RESTful endpoints with IAM authentication
+- Error Handling: Comprehensive logging and error management
+
+### Infrastructure (Terraform)
+- Infrastructure as Code: Complete AWS infrastructure automation
+- Multi-Environment: Staging (Spot) and Production (On-Demand)
+- Security: VPC, Security Groups, IAM roles with least privilege
+- Monitoring: CloudWatch integration with custom metrics
+
+## 🛠️ Technology Stack
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Frontend** | React 18, Amplify UI | User interface and authentication |
+| **Backend** | Node.js, Express.js | REST API and business logic |
+| **Serverless** | Python 3.9, Lambda | Event processing and notifications |
+| **Database** | DynamoDB | NoSQL data storage |
+| **Storage** | S3 | File storage and static assets |
+| **Authentication** | Cognito | User management and authorization |
+| **Infrastructure** | Terraform | Infrastructure as Code |
+| **CI/CD** | GitHub Actions | Automated deployment pipeline |
+| **Monitoring** | CloudWatch, X-Ray | Observability and tracing |
+
+## 🏃‍♂️ Quick Start
+
+### Prerequisites
+- Node.js 18+
+- Docker
+- AWS CLI configured
+- Terraform 1.6+
+
+### Local Development
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd 2026jan181455
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   # Frontend
+   npm install
+   
+   # Backend
+   cd backend
+   npm install
+   ```
+
+3. **Set up environment variables**:
+   ```bash
+   # Create .env file in backend/
+   cp backend/.env.example backend/.env
+   # Update with your AWS configuration
+   ```
+
+4. **Run locally**:
+   ```bash
+   # Frontend (port 3000)
+   npm start
+   
+   # Backend (port 3001)
+   cd backend
+   npm run dev
+   ```
+
+### Production Deployment
+
+1. **Deploy Infrastructure**:
+   ```bash
+   cd ../2026jan201246
+   terraform init
+   terraform apply -var-file="terraform.production.tfvars"
+   ```
+
+2. **Push Code**:
+   ```bash
+   git push origin main
+   # GitHub Actions will automatically build and deploy
+   ```
 
 ## 📁 Project Structure
+
 ```
-.
-├── index.html                 # Simple HTML page
-├── Dockerfile                 # Lightweight Docker configuration
-├── .dockerignore             # Docker ignore rules
-├── .github/
-│   └── workflows/
-│       └── docker-build.yml  # GitHub Actions workflow
-└── README.md                 # This file
+/root/2026jan181455/                 # Application Repository
+├── src/                             # React frontend source
+│   ├── App.js                       # Main React component
+│   ├── App.css                      # Styling
+│   └── index.js                     # Entry point
+├── backend/                         # Node.js backend
+│   ├── server.js                    # Express server
+│   └── package.json                 # Backend dependencies
+├── lambda/                          # Python Lambda functions
+│   ├── user_handler.py              # User operations
+│   └── requirements.txt             # Python dependencies
+├── public/                          # Static assets
+├── .github/workflows/               # CI/CD pipelines
+│   └── docker-build.yml             # Docker build and deploy
+├── Dockerfile                       # Multi-stage container build
+├── nginx.conf                       # Nginx configuration
+└── package.json                     # Frontend dependencies
+
+/root/2026jan201246/                 # Infrastructure Repository
+├── main.tf                          # Main Terraform configuration
+├── networking.tf                    # VPC and networking
+├── security-groups.tf               # Security group definitions
+├── ecs.tf                          # ECS cluster and services
+├── lambda.tf                       # Lambda functions
+├── cognito.tf                      # Authentication setup
+├── storage.tf                      # S3 and DynamoDB
+├── amplify.tf                      # Frontend hosting
+├── iam.tf                          # IAM roles and policies
+├── outputs.tf                      # Terraform outputs
+├── terraform.staging.tfvars        # Staging variables
+├── terraform.production.tfvars     # Production variables
+└── .github/workflows/              # Infrastructure CI/CD
+    └── deploy-infrastructure.yml    # Terraform deployment
 ```
 
-## 🐳 Docker Setup
+## 🔐 Security Features
 
-### Dockerfile Features:
-- **Base Image**: `nginx:alpine` (~5MB only)
-- **Multi-platform**: Supports AMD64 and ARM64
-- **Optimized**: Minimal layers for faster builds
+### Network Security
+- **VPC Isolation**: Private subnets for compute resources
+- **Security Groups**: Layered security with minimal required access
+- **NAT Gateways**: Secure internet access for private resources
 
-### Local Testing:
+### Application Security
+- **Authentication**: Cognito User Pools with configurable password policies
+- **Authorization**: Identity Pools for AWS resource access
+- **API Security**: IAM-based API Gateway authentication
+- **Data Encryption**: S3 and DynamoDB encryption at rest
+
+### Infrastructure Security
+- **Least Privilege**: IAM roles with minimal required permissions
+- **Secrets Management**: Environment variables for sensitive data
+- **Security Scanning**: Automated vulnerability scanning in CI/CD
+- **Compliance**: AWS Config rules for compliance monitoring
+
+## 📊 Monitoring & Observability
+
+### Application Monitoring
+- **Health Checks**: ECS task and ALB target group health monitoring
+- **Custom Metrics**: Application-specific CloudWatch metrics
+- **Distributed Tracing**: X-Ray integration for request tracing
+- **Log Aggregation**: Centralized logging with CloudWatch Logs
+
+### Infrastructure Monitoring
+- **Resource Utilization**: CPU, memory, and network metrics
+- **Cost Monitoring**: AWS Cost Explorer integration
+- **Alerting**: CloudWatch alarms for critical thresholds
+- **Performance**: Application Load Balancer metrics
+
+## 🌍 Environment Management
+
+### Staging Environment
+- **Purpose**: Development and testing
+- **Compute**: ECS Fargate Spot (cost-optimized)
+- **Scaling**: Single instance, manual scaling
+- **Features**: Reduced logging, minimal backups
+
+### Production Environment
+- **Purpose**: Live application serving users
+- **Compute**: ECS Fargate On-Demand (reliability-focused)
+- **Scaling**: Multi-instance with auto-scaling
+- **Features**: Enhanced monitoring, automated backups, advanced security
+
+## 🔄 CI/CD Pipeline
+
+### Application Pipeline (`2026jan181455`)
+```
+Code Push → GitHub Actions → Docker Build → Security Scan → Deploy to ECS
+```
+
+### Infrastructure Pipeline (`2026jan201246`)
+```
+Terraform Changes → Plan → Security Scan → Apply → Resource Updates
+```
+
+### Branch Strategy
+- **`develop`** → Staging environment deployment
+- **`main`** → Production environment deployment
+- **Feature branches** → Automatic preview environments
+
+## 📈 Scaling Considerations
+
+### Horizontal Scaling
+- **ECS Services**: Auto-scaling based on CPU/memory utilization
+- **Lambda Functions**: Automatic scaling with concurrent execution limits
+- **DynamoDB**: On-demand billing with automatic scaling
+
+### Vertical Scaling
+- **ECS Tasks**: Configurable CPU and memory allocation
+- **Lambda Memory**: Adjustable memory allocation (128MB - 10GB)
+- **Database**: DynamoDB capacity modes (On-Demand vs Provisioned)
+
+## 💰 Cost Optimization
+
+### Development/Staging
+- Fargate Spot instances (up to 70% savings)
+- Reduced log retention periods
+- Minimal backup and versioning
+- Single-instance deployments
+
+### Production
+- Reserved capacity for predictable workloads
+- Lifecycle policies for S3 storage classes
+- DynamoDB on-demand for variable workloads
+- CloudWatch cost monitoring and alerts
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Authentication Errors**
+   - Check Cognito User Pool configuration
+   - Verify callback URLs in Amplify configuration
+   - Ensure IAM roles have correct permissions
+
+2. **API Connection Issues**
+   - Verify security group rules
+   - Check ALB target group health
+   - Review CloudWatch logs for errors
+
+3. **File Upload Problems**
+   - Confirm S3 bucket policies
+   - Check CORS configuration
+   - Verify Cognito Identity Pool permissions
+
+### Debugging Commands
+
 ```bash
-# Build image locally
-docker build -t hello-world-app .
+# Check ECS service status
+aws ecs describe-services --cluster demo-staging-cluster --services demo-staging-service
 
-# Run container
-docker run -p 8080:80 hello-world-app
+# View application logs
+aws logs tail /ecs/demo-staging --follow
 
-# Access at http://localhost:8080
+# Check Lambda function logs
+aws logs tail /aws/lambda/demo-staging-user-handler --follow
+
+# Monitor Amplify build
+aws amplify list-jobs --app-id <app-id> --branch-name main
 ```
 
-## 🔧 GitHub Actions Setup
+## 🤝 Contributing
 
-### Required Secrets:
-Go to GitHub Repository → Settings → Secrets and Variables → Actions
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-Add these secrets:
-- `DOCKER_USERNAME`: Your Docker Hub username
-- `DOCKER_PASSWORD`: Your Docker Hub access token
+## 📄 License
 
-### Workflow Features:
-- **Triggers**: Push to main/master branch, Pull requests
-- **Multi-platform builds**: AMD64 and ARM64
-- **Caching**: GitHub Actions cache for faster builds
-- **Tagging**: Automatic versioning with branch names and SHA
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📋 Step-by-Step Setup Guide
+## 🙏 Acknowledgments
 
-### Step 1: Docker Hub Account Setup
-1. Create account at [hub.docker.com](https://hub.docker.com)
-2. Go to Account Settings → Security
-3. Create Access Token (not password!)
-4. Copy username and token
-
-### Step 2: GitHub Repository Setup
-1. Push this code to your GitHub repository
-2. Go to Repository Settings → Secrets and Variables → Actions
-3. Add secrets:
-   - Name: `DOCKER_USERNAME`, Value: your-docker-username
-   - Name: `DOCKER_PASSWORD`, Value: your-access-token
-
-### Step 3: Trigger Build
-1. Push code to main/master branch
-2. Check Actions tab in GitHub
-3. Monitor build progress
-4. Image will be pushed to Docker Hub automatically
-
-### Step 4: Verify Deployment
-1. Check your Docker Hub repository
-2. Pull and run image:
-```bash
-docker pull your-username/hello-world-app:latest
-docker run -p 8080:80 your-username/hello-world-app:latest
-```
-
-## 🏷️ Image Tagging Strategy
-
-The workflow creates multiple tags:
-- `latest` - Latest version from main branch
-- `main-<sha>` - Branch name with commit SHA
-- `<branch-name>` - Branch name for feature branches
-
-## 🔒 Security Best Practices
-
-1. **Never use Docker password** - Use access tokens only
-2. **Secrets management** - Store credentials in GitHub Secrets
-3. **Multi-platform builds** - Support different architectures
-4. **Cache optimization** - Faster builds with GitHub Actions cache
-
-## 📊 Build Optimization
-
-- **Image size**: ~15MB (nginx:alpine + HTML)
-- **Build time**: ~2-3 minutes with cache
-- **Platforms**: linux/amd64, linux/arm64
-- **Caching**: GitHub Actions cache enabled
-
-## 🚀 Usage Examples
-
-### Production Deployment:
-```bash
-docker run -d -p 80:80 --name hello-app your-username/hello-world-app:latest
-```
-
-### Development with Volume Mount:
-```bash
-docker run -p 8080:80 -v $(pwd)/index.html:/usr/share/nginx/html/index.html your-username/hello-world-app:latest
-```
-
-## 🔍 Troubleshooting
-
-### Common Issues:
-
-1. **Build fails with authentication error**
-   - Check Docker Hub credentials in GitHub Secrets
-   - Ensure using access token, not password
-
-2. **Image not found on Docker Hub**
-   - Check workflow logs in GitHub Actions
-   - Verify repository name matches secrets
-
-3. **Local build fails**
-   - Ensure Docker is running
-   - Check Dockerfile syntax
-
-### Debug Commands:
-```bash
-# Check running containers
-docker ps
-
-# View container logs
-docker logs <container-id>
-
-# Inspect image
-docker inspect your-username/hello-world-app:latest
-```
-
-## 📈 Next Steps
-
-- Add health checks to Dockerfile
-- Implement staging environment
-- Add automated testing
-- Set up monitoring and logging
-- Configure custom domain
+- AWS for providing comprehensive cloud services
+- React team for the excellent frontend framework
+- Terraform for infrastructure as code capabilities
+- GitHub Actions for seamless CI/CD integration
 
 ---
-**Built with ❤️ using Docker + GitHub Actions**
+
+**Built with ❤️ for learning AWS services integration and modern application architecture patterns.**
