@@ -65,7 +65,7 @@ Internet
 - Security: VPC, Security Groups, IAM roles with least privilege
 - Monitoring: CloudWatch integration with custom metrics
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -79,7 +79,7 @@ Internet
 | **CI/CD** | GitHub Actions | Automated deployment pipeline |
 | **Monitoring** | CloudWatch, X-Ray | Observability and tracing |
 
-## 🏃‍♂️ Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+
@@ -137,7 +137,7 @@ Internet
    # GitHub Actions will automatically build and deploy
    ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 /root/2026jan181455/                 # Application Repository
@@ -175,7 +175,7 @@ Internet
     └── deploy-infrastructure.yml    # Terraform deployment
 ```
 
-## 🔐 Security Features
+## Security Features
 
 ### Network Security
 - **VPC Isolation**: Private subnets for compute resources
@@ -194,7 +194,7 @@ Internet
 - **Security Scanning**: Automated vulnerability scanning in CI/CD
 - **Compliance**: AWS Config rules for compliance monitoring
 
-## 📊 Monitoring & Observability
+## Monitoring & Observability
 
 ### Application Monitoring
 - **Health Checks**: ECS task and ALB target group health monitoring
@@ -208,7 +208,7 @@ Internet
 - **Alerting**: CloudWatch alarms for critical thresholds
 - **Performance**: Application Load Balancer metrics
 
-## 🌍 Environment Management
+## Environment Management
 
 ### Staging Environment
 - **Purpose**: Development and testing
@@ -222,7 +222,7 @@ Internet
 - **Scaling**: Multi-instance with auto-scaling
 - **Features**: Enhanced monitoring, automated backups, advanced security
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 ### Application Pipeline (`2026jan181455`)
 ```
@@ -239,7 +239,7 @@ Terraform Changes → Plan → Security Scan → Apply → Resource Updates
 - **`main`** → Production environment deployment
 - **Feature branches** → Automatic preview environments
 
-## 📈 Scaling Considerations
+## Scaling Considerations
 
 ### Horizontal Scaling
 - **ECS Services**: Auto-scaling based on CPU/memory utilization
@@ -251,7 +251,7 @@ Terraform Changes → Plan → Security Scan → Apply → Resource Updates
 - **Lambda Memory**: Adjustable memory allocation (128MB - 10GB)
 - **Database**: DynamoDB capacity modes (On-Demand vs Provisioned)
 
-## 💰 Cost Optimization
+## Cost Optimization
 
 ### Development/Staging
 - Fargate Spot instances (up to 70% savings)
@@ -265,7 +265,7 @@ Terraform Changes → Plan → Security Scan → Apply → Resource Updates
 - DynamoDB on-demand for variable workloads
 - CloudWatch cost monitoring and alerts
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -300,7 +300,7 @@ aws logs tail /aws/lambda/demo-staging-user-handler --follow
 aws amplify list-jobs --app-id <app-id> --branch-name main
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -308,11 +308,11 @@ aws amplify list-jobs --app-id <app-id> --branch-name main
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - AWS for providing comprehensive cloud services
 - React team for the excellent frontend framework
@@ -321,4 +321,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for learning AWS services integration and modern application architecture patterns.**
+**Built for learning AWS services integration and modern application architecture patterns.**
